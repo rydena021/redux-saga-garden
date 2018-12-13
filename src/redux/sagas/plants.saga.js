@@ -28,11 +28,21 @@ function* deletePlant(action) {
   }
 }
 
+function* getPlant(action) {
+  try {
+    const detailsResponse = yield call(axios.get, `/api/plant/details/${action.payload}`);
+    yield dispatch({ type: 'SET_PLANT', payload: detailsResponse });
+  } catch (error) {
+    console.log('error: ', error);
+  }
+}
+
 // this is the saga that will watch for actions
 function* watcherSaga() {
   yield takeEvery('FETCH_PLANTS', fetchPlants);
   yield takeEvery('ADD_PLANT', postPlant);
   yield takeEvery('DELETE_PLANT', deletePlant);
+  yield takeEvery('GET_PLANT', getPlant);
 }
 
 export default watcherSaga;

@@ -9,6 +9,16 @@ const plantsReducer = (state = [], action) => {
   }
 };
 
+const detailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_PLANT':
+      return action.payload.data[0];
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   plantsReducer,
+  detailsReducer
 })

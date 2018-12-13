@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const queryText = 'SELECT id, name FROM plant';
+  const queryText = 'SELECT * FROM plant';
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((err) => {
@@ -48,12 +48,12 @@ router.put('/', (req, res) => {
   const updatedPlant = req.body;
 
   const queryText = `UPDATE table_name
-  SET "name" = $1, 
-  "kingdom" = $2, 
-  "clade" = $3, 
-  "order" = $4, 
-  "family" = $5, 
-  "subfamily" = $6, 
+  SET "name" = $1,
+  "kingdom" = $2,
+  "clade" = $3,
+  "order" = $4,
+  "family" = $5,
+  "subfamily" = $6,
   "genus" = $7
   WHERE id=$8;`;
 
@@ -76,9 +76,9 @@ router.put('/', (req, res) => {
     });
 });
 
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res) => {
   const queryText = 'DELETE FROM plant WHERE id=$1';
-  pool.query(queryText, [req.query.id])
+  pool.query(queryText, [req.params.id])
     .then(() => { res.sendStatus(200); })
     .catch((err) => {
       console.log('Error completing SELECT plant query', err);

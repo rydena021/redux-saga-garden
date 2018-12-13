@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-const mapStateToProps = reduxState => ({
-    reduxState,
-});
+import PlantItem from '../PlantItem/PlantItem';
 
 class PlantList extends Component {
     componentDidMount() {
         // use component did mount to dispatch an action to request the plantList from the API
+        this.props.dispatch({ type: 'FETCH_PLANTS' })
     }
 
     render() {
+
+        let plantHtml = this.props.reduxState.plantsReducer.map( plant => <PlantItem key={plant.id} plant={plant}/>)
         return (
             <div>
-                <h3>This is the plant list</h3>
-                <pre>{JSON.stringify(this.props.reduxState)}</pre>
+                {plantHtml}
             </div>
         );
     }
 }
+
+
+const mapStateToProps = reduxState => ({
+  reduxState,
+});
 
 export default connect(mapStateToProps)(PlantList);
